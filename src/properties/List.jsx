@@ -11,13 +11,16 @@ function List({ match }) {
         propertyService.getAll().then(x => setProperties(x.items));
     }, []);
 
-    function deleteUser(id) {
+    function deleteProperty(propertyId) {
+        if (!prompt("Are you sure to remove this property?", "OK DELETE"))
+            return;
+
         setProperties(properties.map(x => {
-            if (x.id === id) { x.isDeleting = true; }
+            if (x.propertyId === propertyId) { x.isDeleting = true; }
             return x;
         }));
-        propertyService.delete(id).then(() => {
-            setProperties(properties => properties.filter(x => x.id !== id));
+        propertyService.delete(propertyId).then(() => {
+            setProperties(properties => properties.filter(x => x.propertyId !== propertyId));
         });
     }
 
@@ -48,7 +51,7 @@ function List({ match }) {
                             <td>{property.ownerName}</td>
                             <td style={{ whiteSpace: 'nowrap' }}>
                                 <Link to={`${path}/edit/${property.propertyId}`} className="btn btn-sm btn-primary mr-1">Edit</Link>
-                                <button onClick={() => deleteUser(property.propertyId)} className="btn btn-sm btn-danger btn-delete-property" disabled={property.isDeleting}>
+                                <button onClick={() => deleteProperty(property.propertyId)} className="btn btn-sm btn-danger btn-delete-property" disabled={property.isDeleting}>
                                     {property.isDeleting
                                         ? <span className="spinner-border spinner-border-sm"></span>
                                         : <span>Delete</span>

@@ -48,7 +48,7 @@ function AddEdit({ history, match }) {
                 alertService.success('Property added', { keepAfterRouteChange: true });
                 history.push('.');
             })
-            .catch(alertService.error);
+            .catch(err => alertService.error(err));
     }
 
     function updateProperty(id, data) {
