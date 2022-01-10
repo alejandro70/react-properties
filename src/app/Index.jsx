@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Route, Switch, Redirect, useLocation } from 'react-router-dom';
 
-import { Nav, Alert } from '@/_components';
+import { Nav, Alert, Login } from '@/_components';
 import { Home } from '@/home';
 import { Properties } from '@/properties';
 
 function App() {
     const { pathname } = useLocation();
+    const [token, setToken] = useState();
+
+    if (!token) {
+        return <Login setToken={setToken} />
+    }
 
     return (
         <div className="app-container bg-light">
